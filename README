@@ -1,0 +1,30 @@
+/* CSci4061 S2016 Assignment 4
+ * Group ID: AR
+ * Name: Sujita Shah, Chaoran Chen, Cheng Chen, Arafa Alam
+ * X500: shahx220, chen4393, chen4162, Alamx029 */
+
+1. The purpose of the program.
+We need to do a multithreaded web-server and cache by using the POSIX threads.
+
+2. How to compile the program.
+Firstly clean up. Just go to the SourceCode directory and run: make clean.
+Next run the program. In the same directory just run: make. 
+Then input required commands and check the output.
+
+3. How to run the program in the terminal.
+1)Firstly go to SourceCode directory and run: ./web_server <port> <path_to_testing>/testing <num_dispatch> <num_worker> <queue_len> <cache_len>
+2)Then go to the testing directory and run: wget -i <path-to-urls>/urls -O myres
+3)Then the requests will be recorded into the web_server_log file
+4)Please refer to the how_to_test file
+
+4. How our program works
+In the main() function, the program starts and creates the many required dispatcher and worker threads. The maximum number of the dispatcher and worker threads will be determined by the parameters in the command.
+The dispatch function accepts the connections and reads the requests. Then the requests will be pushed into the queue.
+Then the worker function pulls the requests from the queue in a while loop in the order that they are located in the queue.
+Next it will check the cache which is actually a queue. 
+If the request file is in the cache, then it pulls the required file from the cache directly. If not, it pulls the required file from the disk and push the new file into the cache.
+Retrieving the required file from the cache is much faster than from the disk.
+When the cache is full, it just deletes the least recent file to create a spot for the new file.
+Lastly it returns the results and record the results into the web_server_log file.
+
+5. In the web_server_log file, the unit of the time_interval is us(microsecond) instead of ms(millisecond).
